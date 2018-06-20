@@ -1,0 +1,58 @@
+<svg id="cp_blue" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6fecfc;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-5 {
+        fill: #1b1b1b;
+        mix-blend-mode: overlay;
+      }
+    </style>
+    <filter id="filter" x="343" y="358" width="115" height="127" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="6.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#0fafee" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" mode="screen" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="362" y1="454.02" x2="400.5" y2="409.73" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7ff7ff"/>
+      <stop offset="1" stop-color="#0ba6e4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="438" y1="450.625" x2="400.5" y2="413.125" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0ba6e4"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="400" y1="422.469" x2="400" y2="377" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#39d1f1"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+  </defs>
+  <path id="b" class="cls-1" d="M399.994,464.988l-38-22V399l38-22,38,22v43.992Z" transform="translate(-340.5 -361.5)"/>
+  <path id="b-2" data-name="b" class="cls-2" d="M362,398.753l38.493,22.741V465L362,442.258v-43.5Z" transform="translate(-340.5 -361.5)"/>
+  <path id="b-3" data-name="b" class="cls-3" d="M438,398.753l-37.507,22.741V465L438,442.258v-43.5Z" transform="translate(-340.5 -361.5)"/>
+  <path id="b-4" data-name="b" class="cls-4" d="M399.506,377L362,398.753l38.493,23.73L438,398.753Z" transform="translate(-340.5 -361.5)"/>
+  <path id="b-5" data-name="b" class="cls-5" d="M367.922,409.618l25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82V446.2l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Z" transform="translate(-340.5 -361.5)"/>
+</svg>

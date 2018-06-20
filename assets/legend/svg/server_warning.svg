@@ -1,0 +1,61 @@
+<svg id="cp_yellow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        fill: url(#linear-gradient);
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-5 {
+        fill: #1b1b1b;
+        opacity: 0.8;
+        mix-blend-mode: overlay;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="668" y1="337" x2="668" y2="249" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff9a18"/>
+      <stop offset="1" stop-color="#ffdc1d"/>
+    </linearGradient>
+    <filter id="filter" x="611" y="230" width="115" height="127" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="6.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#ff9a18" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" mode="screen" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="630" y1="326.02" x2="668.5" y2="281.73" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffdc1d"/>
+      <stop offset="0.005" stop-color="#ffdc1d"/>
+      <stop offset="1" stop-color="#ff9a18"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="706" y1="322.625" x2="668.5" y2="285.125" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="668" y1="294.469" x2="668" y2="249" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffb618"/>
+      <stop offset="1" stop-color="#ffdc1d"/>
+    </linearGradient>
+  </defs>
+  <path id="b" class="cls-1" d="M667.994,336.988l-38-22V271l38-22,38,22v43.992Z" transform="translate(-608.5 -233.5)"/>
+  <path id="b-2" data-name="b" class="cls-2" d="M630,270.753l38.493,22.741V337L630,314.258v-43.5Z" transform="translate(-608.5 -233.5)"/>
+  <path id="b-3" data-name="b" class="cls-3" d="M706,270.753l-37.507,22.741V337L706,314.258v-43.5Z" transform="translate(-608.5 -233.5)"/>
+  <path id="b-4" data-name="b" class="cls-4" d="M667.506,249L630,270.753l38.493,23.73L706,270.753Z" transform="translate(-608.5 -233.5)"/>
+  <path id="b-5" data-name="b" class="cls-5" d="M635.922,281.618l25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82V318.2l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Z" transform="translate(-608.5 -233.5)"/>
+</svg>

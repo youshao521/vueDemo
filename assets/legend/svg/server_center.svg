@@ -1,0 +1,73 @@
+<svg id="cp_blue_center" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6fecfc;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-5 {
+        fill: #1b1b1b;
+        mix-blend-mode: overlay;
+      }
+
+      .cls-6 {
+        fill: #009ddc;
+        mix-blend-mode: multiply;
+        filter: url(#filter-2);
+      }
+    </style>
+    <filter id="filter" x="92" y="359" width="115" height="127" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="6.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#0fafee" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" mode="screen" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="111" y1="455.02" x2="149.5" y2="410.73" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7ff7ff"/>
+      <stop offset="1" stop-color="#0ba6e4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="187" y1="451.625" x2="149.5" y2="414.125" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0ba6e4"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="149" y1="423.469" x2="149" y2="378" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#39d1f1"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+    <filter id="filter-2" x="139.969" y="392" width="19.031" height="16" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="1" in="SourceAlpha"/>
+      <feFlood result="flood" flood-opacity="0.1"/>
+      <feComposite result="composite" operator="out" in2="blur"/>
+      <feOffset result="offset" dy="1"/>
+      <feComposite result="composite-2" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend" mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="b" class="cls-1" d="M148.994,465.988l-38-22V400l38-22,38,22v43.992Z" transform="translate(-89.5 -362.5)"/>
+  <path id="b-2" data-name="b" class="cls-2" d="M111,399.753l38.493,22.741V466L111,443.258v-43.5Z" transform="translate(-89.5 -362.5)"/>
+  <path id="b-3" data-name="b" class="cls-3" d="M187,399.753l-37.507,22.741V466L187,443.258v-43.5Z" transform="translate(-89.5 -362.5)"/>
+  <path id="b-4" data-name="b" class="cls-4" d="M148.506,378L111,399.753l38.493,23.73L187,399.753Z" transform="translate(-89.5 -362.5)"/>
+  <path id="b-5" data-name="b" class="cls-5" d="M116.922,410.618l25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82V447.2l-25.662-15.82v-4.944Zm0,7.91,25.662,15.82v4.944l-25.662-15.82v-4.944Z" transform="translate(-89.5 -362.5)"/>
+  <path id="star" class="cls-6" d="M155.835,408.011l-6.693-4.66-7.157,4.425,3.457-6.991-5.458-3.769,7.255,0.116L149.75,392l1.96,5.2,7.3,0.094-5.889,3.612Z" transform="translate(-89.5 -362.5)"/>
+</svg>

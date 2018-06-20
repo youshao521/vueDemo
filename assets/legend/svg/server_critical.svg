@@ -1,0 +1,62 @@
+<svg id="cp_red" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        fill: url(#linear-gradient);
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-5 {
+        fill: #1b1b1b;
+        mix-blend-mode: overlay;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="151.5" y1="218" x2="151.5" y2="129" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e8201b"/>
+      <stop offset="1" stop-color="#ff7070"/>
+    </linearGradient>
+    <filter id="filter" x="94" y="110" width="116" height="128" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="6.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#ff4646" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" mode="screen" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="113" y1="206.932" x2="152" y2="162.068" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff7070"/>
+      <stop offset="1" stop-color="#d3130f"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="190" y1="203.5" x2="152" y2="165.5" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d3130f"/>
+      <stop offset="1" stop-color="#ff6363"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="151.5" y1="174" x2="151.5" y2="129" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ea3935"/>
+      <stop offset="1" stop-color="#ff5e5e"/>
+    </linearGradient>
+  </defs>
+  <path id="b" class="cls-1" d="M151.494,217.988l-38.5-22.246V151.251l38.5-22.245L190,151.251v44.491Z" transform="translate(-92 -114)"/>
+  <path id="b-2" data-name="b" class="cls-2" d="M113,151l39,23v44l-39-23V151Z" transform="translate(-92 -114)"/>
+  <path id="b-3" data-name="b" class="cls-3" d="M190,151l-38,23v44l38-23V151Z" transform="translate(-92 -114)"/>
+  <path id="b-4" data-name="b" class="cls-4" d="M151,129l-38,22,39,23,38-23Z" transform="translate(-92 -114)"/>
+  <path id="b-5" data-name="b" class="cls-5" d="M119,162l26,16v5l-26-16v-5Zm0,8,26,16v5l-26-16v-5Zm0,8,26,16v5l-26-16v-5Zm0,8,26,16v5l-26-16v-5Z" transform="translate(-92 -114)"/>
+</svg>

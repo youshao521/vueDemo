@@ -1,0 +1,52 @@
+<svg id="cp_blue_small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="74" height="74" viewBox="0 0 74 74">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6fecfc;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-3);
+      }
+    </style>
+    <filter id="filter" x="597" y="401" width="75" height="82" filterUnits="userSpaceOnUse">
+      <feGaussianBlur result="blur" stdDeviation="6.667" in="SourceAlpha"/>
+      <feComposite result="composite"/>
+      <feComposite result="composite-2"/>
+      <feComposite result="composite-3"/>
+      <feFlood result="flood" flood-color="#0fafee" flood-opacity="0.4"/>
+      <feComposite result="composite-4" operator="in" in2="composite-3"/>
+      <feBlend result="blend" mode="screen" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="616" y1="457.136" x2="634.219" y2="436.177" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7ff7ff"/>
+      <stop offset="1" stop-color="#0ba6e4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="652" y1="455.547" x2="634.219" y2="437.766" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0ba6e4"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="634" y1="442.188" x2="634" y2="420.656" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#39d1f1"/>
+      <stop offset="1" stop-color="#7ff7ff"/>
+    </linearGradient>
+  </defs>
+  <path id="b" class="cls-1" d="M634,462.336l-18-10.419V431.08l18-10.419,18,10.419v20.837Z" transform="translate(-597.5 -405)"/>
+  <path id="b-2" data-name="b" class="cls-2" d="M616,430.962l18.234,10.772v20.608L616,451.57V430.962Z" transform="translate(-597.5 -405)"/>
+  <path id="b-3" data-name="b" class="cls-3" d="M652,430.962l-17.766,10.772v20.608L652,451.57V430.962Z" transform="translate(-597.5 -405)"/>
+  <path id="b-4" data-name="b" class="cls-4" d="M633.766,420.658L616,430.962l18.234,11.24L652,430.962Z" transform="translate(-597.5 -405)"/>
+</svg>

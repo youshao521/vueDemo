@@ -1,0 +1,796 @@
+openapi: 3.0.0
+info:
+  title: 运行管理中心 RESTful 接口
+  version: 1.0.0
+  description: "后端需要给所有接口加上 `_method` 的 query 支持，`POST /xxx?_method=delete` 等同 `DELETE /xxx`\n\n所有响应的格式都为：\n```js\n{\n  \"code\": Number,\n  \"msg\": String,\n  // 操作失败时为 null\n  \"data\": Object | Null\n}\n```\n\n只有 code 为 0 时 HTTP 状态码为 2xx；code 不为 0 时状态码为 4xx、5xx\n\n下面举例时响应中只表示 \"data\" 中的数据结构，忽略了 code 和 msg。"
+servers:
+  - url: /api
+    description: 服务器地址
+paths:
+  /locales:
+    get:
+      summary: 获取多语言列表
+      tags:
+        - 多语言
+      responses:
+        '200':
+          description: 多语言列表
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - locales
+                properties:
+                  locales:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - code
+                        - name
+                      properties:
+                        code:
+                          type: string
+                          description: 多语言标识
+                          example: zh_CN
+                        name:
+                          type: string
+                          description: 多语言名称
+                          example: 简体中文
+  /meta:
+    get:
+      summary: Meta 信息
+      tags:
+        - Meta
+      responses:
+        '200':
+          description: Meta 信息对象
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      hasQRCode:
+                        type: boolean
+                        description: 是否有二维码
+                      personCardMode:
+                        type: string
+                        description: 当前系统人员证件的模式，个人身份（身份证、护照……）或公司身份（工作证件）
+                        enum:
+                          - individual
+                          - company
+                      standardTime:
+                        type: string
+                        format: date
+                        description: 服务器标准时间
+                      system:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: 系统标题
+                            example: 海康威视系统软件
+                          version:
+                            type: string
+                            description: 系统版本
+                            example: 1.0.0
+  /meta/agent.vbs:
+    get:
+      summary: 下载 agent 客户端的脚本（Windows）
+      tags:
+        - Meta
+      responses:
+        '200':
+          description: vbs 文件
+          content:
+            application/x-vbs:
+              schema:
+                type: string
+                format: binary
+  /meta/agent.sh:
+    get:
+      summary: 下载 agent 客户端的脚本（Linux）
+      tags:
+        - Meta
+      responses:
+        '200':
+          description: sh 文件
+          content:
+            application/x-sh:
+              schema:
+                type: string
+                format: binary
+  /meta/qrcode:
+    get:
+      summary: 项目信息二维码
+      tags:
+        - Meta
+      responses:
+        '200':
+          description: 图片文件
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+  /persons:
+    get:
+      summary: 人员列表
+      tags:
+        - 人员
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/q'
+        - name: with
+          in: query
+          description: 附加了其他字段的模型
+            <br>值为 user 时，返回 PersonWithUser 模型
+          schema:
+            type: string
+            enum:
+              - user
+      responses:
+        '200':
+          description: 人员集合（分页）
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    properties:
+                      persons:
+                        type: array
+                        items:
+                          oneOf:
+                          - $ref: '#/components/schemas/Person'
+                          - $ref: '#/components/schemas/PersonWithUser'
+  /questions:
+    get:
+      summary: 获取问题列表
+      tags:
+        - 问题
+      parameters:
+        - $ref: '#/components/parameters/q'
+        - name: tag
+          in: query
+          description: 根据标签搜索
+          schema:
+            type: string
+            description: 标签
+        - name: filter
+          in: query
+          description: 过滤条件
+            <br>值为 recently 时，按最近阅读时间排序，返回十条数据
+            <br>值为 export 时，导出内容仅限当前用户上传的经验，默认显示最近 3 个月
+          schema:
+            type: string
+            enum:
+              - recently
+              - export
+      responses:
+        '200':
+          $ref: '#/components/responses/Questions'
+    post:
+      summary: 新建问题
+      tags:
+        - 问题
+      requestBody:
+        description: 会传 title、tags、content 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        '201':
+          $ref: '#/components/responses/Question'
+  /questions/{questionId}:
+    get:
+      summary: 获取问题资源
+      tags:
+        - 问题
+      responses:
+        '200':
+          $ref: '#/components/responses/Question'
+    patch:
+      summary: 修改问题
+      tags:
+        - 问题
+      requestBody:
+        description: 会传 title、tags、content 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        '200':
+          $ref: '#/components/responses/Question'
+    delete:
+      summary: 删除问题
+      tags:
+        - 问题
+      responses:
+        '204':
+          description: 空
+  /questions/{questionId}/replies:
+    post:
+      summary: 新建回复
+      tags:
+        - 问题
+      requestBody:
+        description: 会传 content 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reply'
+      responses:
+        '201':
+          $ref: '#/components/responses/Reply'
+  /questions/{questionId}/replies/{replyId}:
+    patch:
+      summary: 修改回复
+      tags:
+        - 问题
+      requestBody:
+        description: 会传 content 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reply'
+      responses:
+        '200':
+          $ref: '#/components/responses/Reply'
+    delete:
+      summary: 删除回复
+      tags:
+        - 问题
+      responses:
+        '204':
+          description: 空
+  /questions.zip:
+    post:
+      summary: 导入问题
+      tags:
+        - 问题
+      requestBody:
+        description: zip 文件
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '201':
+          $ref: '#/components/responses/Questions'
+  /questions.zip/{questionId}:
+    get:
+      summary: 导出问题
+      description: questionId 可以多个，用逗号隔开
+      tags:
+        - 问题
+      responses:
+        '200':
+          description: zip 文件
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /session:
+    get:
+      summary: 获取 session 信息
+      tags:
+        - 会话
+      parameters:
+        - name: userId
+          in: query
+          description: 指定用户 ID
+          example: sysadmin
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Session 模型
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+    post:
+      summary: 登录
+      tags:
+        - 会话
+      requestBody:
+        description: Session 模型
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Session'
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                      description: 密码
+                    captcha:
+                      type: string
+                      description: 验证码
+      responses:
+        '201':
+          description: Session 模型
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Session'
+                  - type: object
+                    properties:
+                      isFirstLogin:
+                        type: boolean
+                        description: 是否第一次登录
+                      firstVerification:
+                        type: string
+                        description: 第一次登录时，用作修改密码的校验字段
+    delete:
+      summary: 登出
+      tags:
+        - 会话
+      responses:
+        '204':
+          description: 空
+  /session/captcha:
+    get:
+      summary: 验证码图片
+      tags:
+        - 会话
+      responses:
+        '200':
+          description: 图片文件
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+  /shortcuts:
+    get:
+      summary: 获取快捷方式列表
+      tags:
+        - 快捷方式
+      responses:
+        '200':
+          $ref: '#/components/responses/Shortcuts'
+    put:
+      summary: 修改快捷方式
+      tags:
+        - 快捷方式
+      requestBody:
+        description: 快捷方式模型
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shortcuts:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Shortcut'
+      responses:
+        '200':
+          $ref: '#/components/responses/Shortcuts'
+  /users:
+    get:
+      summary: 用户列表
+      tags:
+        - 用户
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: 用户集合（分页）
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+    post:
+      summary: 新建用户
+      tags:
+        - 用户
+      requestBody:
+        description: 会传 name、enabled、password、person 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          $ref: '#/components/responses/User'
+  /users/{userId}:
+    get:
+      summary: 用户信息
+      tags:
+        - 用户
+      responses:
+        '200':
+          $ref: '#/components/responses/User'
+    patch:
+      summary: 修改用户信息
+      tags:
+        - 用户
+      requestBody:
+        description: 会传 enabled、password 字段
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          $ref: '#/components/responses/User'
+    delete:
+      summary: 删除用户
+      description: userId 可以多个，用逗号隔开
+      tags:
+        - 用户
+      responses:
+        '204':
+          description: 空
+  /users/{userId}/password:
+    put:
+      summary: 修改用户密码
+      tags:
+        - 用户
+      requestBody:
+        description: Session 模型
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Session'
+                - type: object
+                  properties:
+                    oldPassword:
+                      type: string
+                      description: 旧密码
+                    password:
+                      type: string
+                      description: 新密码
+                    firstVerification:
+                      type: string
+                      description: 第一次登录时，用作修改密码的校验字段
+      responses:
+        '200':
+          description: Session 模型
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+components:
+  schemas:
+    OrganizationBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 组织 ID
+        name:
+          type: string
+          description: 组织名称
+    Organization:
+      allOf:
+        - $ref: '#/components/schemas/OrganizationBase'
+        - type: object
+          properties:
+            organizations:
+              type: array
+              items:
+                $ref: '#/components/schemas/Organization'
+                description: 嵌套 Organization
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: number
+          description: 总条数
+          example: 40
+        page:
+          type: number
+          description: 当前页的页码
+          example: 3
+        perPage:
+          type: number
+          description: 每页几条
+          example: 5
+        lastPage:
+          type: number
+          description: 最后一页的页码
+          example: 8
+    PersonBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 人员 ID
+        name:
+          type: string
+          description: 人员名称
+          example: 张三
+    Person:
+      allOf:
+      - $ref: '#/components/schemas/PersonBase'
+      - type: object
+        properties:
+          birthday:
+            type: string
+            description: 生日
+          email:
+            type: string
+            description: 邮箱
+          mobile:
+            type: string
+            description: 手机号
+          gender:
+            type: string
+            description: 性别
+            enum:
+              - male
+              - female
+              - other
+          cardType:
+            type: number
+            description: 证件类型
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+          cardNo:
+            type: string
+            description: 证件号
+          organization:
+            $ref: '#/components/schemas/OrganizationBase'
+    PersonWithUser:
+      allOf:
+      - $ref: '#/components/schemas/Person'
+      - type: object
+        properties:
+          user:
+            $ref: '#/components/schemas/UserBase'
+            nullable: true
+    QuestionBase:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          description: 标题
+        createdAt:
+          type: string
+          format: date
+          description: 创建时间
+        tags:
+          type: array
+          description: 标签
+          items:
+            type: string
+        user:
+          $ref: '#/components/schemas/UserBase'
+    Question:
+      allOf:
+        - $ref: '#/components/schemas/QuestionBase'
+        - type: object
+          properties:
+            content:
+              type: string
+              description: 问题内容（HTML）
+            replies:
+              type: array
+              description: 回复列表
+              items:
+                $ref: '#/components/schemas/Reply'
+    Reply:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date
+          description: 创建时间
+        user:
+          $ref: '#/components/schemas/UserBase'
+        content:
+          type: string
+          description: 回复内容（HTML）
+    Session:
+      type: object
+      properties:
+        user:
+          allOf:
+            - $ref: '#/components/schemas/UserBase'
+            - type: object
+              properties:
+                isAdmin:
+                  type: boolean
+                  description: 是否为管理员
+        requireCaptcha:
+          type: boolean
+          description: 是否需要验证码
+        salt:
+          type: string
+          description: 盐值
+        challenge:
+          type: object
+          description: 挑战码
+          properties:
+            id:
+              type: string
+            code:
+              type: string
+    Shortcut:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: 名称
+        type:
+          type: string
+          description: 类型
+          enum:
+            - tool
+            - menu
+          example: menu
+        category:
+          type: string
+          description: 工具分类。待定
+        link:
+          type: string
+          description: 链接。工具返回完整的 url；菜单返回 `/maintenances/settings/components` 这样（不含 /center 上下文）
+          example: /maintenances/settings/components
+        icon:
+          type: string
+          description: 图标链接。工具返回完整 url；菜单返回空字符串
+    UserBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 用户 ID
+          example: zhangsan
+        name:
+          type: string
+          description: 用户名称
+          example: 张三
+    User:
+      allOf:
+      - $ref: '#/components/schemas/UserBase'
+      - type: object
+        properties:
+          isAdmin:
+            type: boolean
+            description: 是否管理员
+          enabled:
+            type: boolean
+            description: 是否启用
+          createdAt:
+            type: string
+            format: date
+            description: 创建时间
+          password:
+            type: string
+            description: 密码。响应中该字段为空字符串
+          person:
+            $ref: '#/components/schemas/PersonBase'
+            nullable: true
+  responses:
+    Question:
+      description: 问题资源
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              question:
+                $ref: '#/components/schemas/Question'
+    Questions:
+      description: 问题集合
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              questions:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionBase'
+    Reply:
+      description: 回复资源
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              reply:
+                $ref: '#/components/schemas/Reply'
+    Replies:
+      description: 回复集合
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              replies:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reply'
+    Shortcuts:
+      description: 快捷方式集合
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              shortcuts:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shortcut'
+    User:
+      description: 用户资源
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: '#/components/schemas/User'
+  parameters:
+    page:
+      name: page
+      in: query
+      description: 当前页的页码
+      schema:
+        type: number
+    perPage:
+      name: perPage
+      in: query
+      description: 每页几条
+      schema:
+        type: number
+    q:
+      name: q
+      in: query
+      description: 全文模糊搜索
+      schema:
+        type: string
+tags:
+  - name: 多语言
+    description: ''
+  - name: Meta
+    description: ''
+  - name: 人员
+    description: ''
+  - name: 问题
+    description: ''
+  - name: 会话
+    description: ''
+  - name: 快捷方式
+    description: ''
+  - name: 用户
+    description: ''

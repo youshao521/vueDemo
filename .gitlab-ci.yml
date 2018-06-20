@@ -1,0 +1,24 @@
+stages:
+  # - deps
+  - test
+  # - build
+cache:
+  key: ${CI_BUILD_REF_NAME}
+  paths:
+    - node_modules/
+# install_dependencies:
+#   stage: deps
+#   script:
+#     - npm i
+lint:
+  stage: test
+  script:
+    - npm run lint
+unit:
+  stage: test
+  script:
+    - npm run unit
+# build:
+#   stage: build
+#   script:
+#     - npm run build
